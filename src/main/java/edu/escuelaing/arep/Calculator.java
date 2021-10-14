@@ -13,7 +13,7 @@ public class Calculator {
       "application/json",
       (req, res) -> {
         res.type("application/json");
-        return processRequest("atan", atan(req.queryParams("value")), req);
+        return processRequest("exp", exp(req.queryParams("value")), req);
       }
     );
 
