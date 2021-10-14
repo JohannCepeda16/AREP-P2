@@ -8,23 +8,16 @@ import spark.Request;
 public class Calculator {
 
   public static void main(String[] args) {
-    get(
-      "/exp",
-      "application/json",
-      (req, res) -> {
-        res.type("application/json");
-        return processRequest("exp", exp(req.queryParams("value")), req);
-      }
-    );
+    port(getPort());
+    get("/exp", "application/json", (req, res) -> {
+      res.type("application/json");
+      return processRequest("exp", exp(req.queryParams("value")), req);
+    });
 
-    get(
-      "/atan",
-      "application/json",
-      (req, res) -> {
-        res.type("application/json");
-        return processRequest("atan", atan(req.queryParams("value")), req);
-      }
-    );
+    get("/atan", "application/json", (req, res) -> {
+      res.type("application/json");
+      return processRequest("atan", atan(req.queryParams("value")), req);
+    });
   }
 
   public static Double exp(String value) {
@@ -43,5 +36,12 @@ public class Calculator {
     json.put("input", req.queryParams("value"));
     json.put("output", value);
     return json;
+  }
+
+  private static int getPort() {
+    if (System.getenv("PORT") != null) {
+      return Integer.parseInt(System.getenv("PORT"));
+    }
+    return 4567;
   }
 }
